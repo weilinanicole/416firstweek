@@ -8,16 +8,150 @@
     <title>Document</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/swiper-3.4.2.min.css">
+    <link rel="stylesheet" href="fonts2/iconfont.css">
 </head>
 
 <body>
     <div class="wrap">
-        <header></header>
-        <section></section>
-        <footer></footer>
+        <header>
+            <i class="icon iconfont icon-kefu"></i>
+            <input type="text" placeholder="给你推荐">
+            <i class="icon iconfont icon-WIFI"></i>
+            <i class="icon iconfont icon-fangdajing"></i>
+        </header>
+        <section>
+            <div class="scroll">
+                <div class="swiper-container big">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <!-- 列表 -->
+                            <div class="tab">
+                                <li class='on'>音乐</li>
+                                <li>视频</li>
+                                <li>电台</li>
+                            </div>
+                            <!-- 轮播图 -->
+                            <div class="swiper-containers small">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <img src="imgs/1.jpg" alt="">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="imgs/2.jpg" alt="">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="imgs/4.jpg" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 圆形 -->
+                            <div class="cir">
+                                <li>
+                                    <i class="icon iconfont icon-42"></i>
+                                    <span>私人FM</span>
+                                </li>
+                                <li>
+                                    <i class="icon iconfont icon-42"></i>
+                                    <span>每日推荐</span>
+                                </li>
+                                <li>
+                                    <i class="icon iconfont icon-42"></i>
+                                    <span>歌单</span>
+                                </li>
+                                <li>
+                                    <i class="icon iconfont icon-42"></i>
+                                    <span>排行榜</span>
+                                </li>
+                            </div>
+                            <div class="title">
+                                推荐歌单
+                                <i class="icon iconfont icon-chevron-thin-right"></i>
+                            </div>
+                            <!-- 详情列表 -->
+                            <div class="box">
+                                <!-- <li>
+                                    <img src="imgs/w1.png" alt="">
+                                    <h2>春日偷懒</h2>
+                                </li>
+                                <li>
+                                    <img src="imgs/w1.png" alt="">
+                                    <p>春日偷懒</p>
+                                </li>
+                                <li>
+                                    <img src="imgs/w1.png" alt="">
+                                    <p>春日偷懒</p>
+                                </li> -->
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            第二页
+                        </div>
+                        <div class="swiper-slide">
+                            第三页
+                        </div>
+                        <div class="swiper-slide">
+                            第四页
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+        <footer>
+            <li class='wh'>
+                <i class="icon iconfont icon-fangdajing"></i>
+                <span>发现音乐</span>
+            </li>
+            <li>
+                <i class="icon iconfont icon-fangdajing"></i>
+                <span>我的音乐</span>
+            </li>
+            <li>
+                <i class="icon iconfont icon-fangdajing"></i>
+                <span>朋友</span>
+            </li>
+            <li>
+                <i class="icon iconfont icon-wode"></i>
+                <span>账号</span>
+            </li>
+        </footer>
     </div>
 </body>
 <script src='js/swiper-3.4.2.min.js'></script>
 <script src='js/jquery-2.1.1.min.js'></script>
+<script>
+    var lis = $('footer').children();
+    var mySwiper = new Swiper('.swiper-container', {
+        // onSlideChangeStart: function(e) {
+        //     var index = e.activeIndex;
+        //     lis.eq(index)
+        // },
+        //autoplay: 1000
+    })
+    var mySwipers = new Swiper('.swiper-containers', {
+        autoplay: 1000,
+        loop: true
+    });
+
+    lis.on('click', function() {
+        var ind = $(this).index();
+        mySwiper.slideTo(ind)
+    });
+    $.ajax({
+        url: './data/data.json',
+        success: function(data) {
+            var str = '';
+            $.each(data.list, function(i, v) {
+                str += ` <li>
+                                    <img src=${v.img} alt="">
+                                    <h2>${v.tit}</h2>
+                                </li>`
+            });
+            $('.box').append(str)
+        }
+    })
+</script>
 
 </html>

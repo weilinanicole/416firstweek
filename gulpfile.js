@@ -3,6 +3,7 @@ var scss = require('gulp-sass');
 var minCss = require('gulp-clean-css');
 var minHtml = require('gulp-htmlmin');
 var minJs = require('gulp-uglify');
+var server = require('gulp-webserver');
 gulp.task('minCss', function() {
     gulp.src(['src/css/*.css', '!src/css/*.min.css'])
         .pipe(scss())
@@ -29,5 +30,15 @@ gulp.task('minJs', function() {
         .pipe(minJs())
         .pipe(gulp.dest('dist/js'))
 });
-
-gulp.task('default', ['minCss', 'minHtml', 'minJs'])
+gulp.task('server', function() {
+    gulp.src('src')
+        .pipe(server({
+            port: 8080,
+            open: true,
+            livereload: true,
+            middleware: function(req, res, next) {
+                next()
+            }
+        }))
+})
+gulp.task('default', ['minCss', 'minHtml', 'minJs', 'server'])
